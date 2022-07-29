@@ -1,0 +1,16 @@
+PODS:
+  - BezierPathLength (1.0.0)
+
+DEPENDENCIES:
+  - BezierPathLength (~> 1.0.0)
+
+SPEC REPOS:
+  trunk:
+    - BezierPathLength
+
+SPEC CHECKSUMS:
+  BezierPathLength: a3033e250660af295c12cb7743b0494e38a40a15
+
+PODFILE CHECKSUM: 5fb5f13928751ffbb97c3c7903e174937dc8365a
+
+COCOAPODS: 1.11.3
