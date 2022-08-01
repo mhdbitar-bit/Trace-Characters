@@ -7,17 +7,8 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    
-    
+final class ViewController: UIViewController {
     @IBOutlet weak var traceView: TraceView!
-    @IBOutlet weak var shape: CoffeeView!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-//        traceView.backgroundColor = .red
-    }
 }
 
 

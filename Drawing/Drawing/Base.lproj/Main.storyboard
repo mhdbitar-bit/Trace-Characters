@@ -16,12 +16,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="letter" translatesAutoresizingMaskIntoConstraints="NO" id="W10-zA-pAx">
+                                <rect key="frame" x="-56" y="107" width="526" height="682"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ziM-B0-3xL" customClass="TraceView" customModule="Drawing" customModuleProvider="target">
-                                <rect key="frame" x="50" y="244.5" width="314" height="407"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="-56" y="107" width="526" height="682"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="407" id="9Sh-dV-uhN"/>
-                                    <constraint firstAttribute="width" constant="314" id="Iye-15-mva"/>
+                                    <constraint firstAttribute="height" constant="682" id="9Sh-dV-uhN"/>
+                                    <constraint firstAttribute="width" constant="526" id="Iye-15-mva"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -29,7 +33,11 @@
                         <color key="backgroundColor" systemColor="systemYellowColor"/>
                         <constraints>
                             <constraint firstItem="ziM-B0-3xL" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7ps-cD-IVI"/>
+                            <constraint firstItem="W10-zA-pAx" firstAttribute="trailing" secondItem="ziM-B0-3xL" secondAttribute="trailing" id="HyX-da-XdQ"/>
                             <constraint firstItem="ziM-B0-3xL" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="TQB-39-EZk"/>
+                            <constraint firstItem="W10-zA-pAx" firstAttribute="top" secondItem="ziM-B0-3xL" secondAttribute="top" id="fDu-df-wkF"/>
+                            <constraint firstItem="W10-zA-pAx" firstAttribute="bottom" secondItem="ziM-B0-3xL" secondAttribute="bottom" id="fVc-a1-HJT"/>
+                            <constraint firstItem="W10-zA-pAx" firstAttribute="leading" secondItem="ziM-B0-3xL" secondAttribute="leading" id="rsL-HQ-Wi8"/>
                         </constraints>
                     </view>
                     <connections>
@@ -42,6 +50,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="letter" width="526" height="682"/>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

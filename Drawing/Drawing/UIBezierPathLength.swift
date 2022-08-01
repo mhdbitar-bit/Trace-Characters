@@ -22,33 +22,33 @@
 
 import UIKit
 
-func bezierCurveLength(fromStart start: CGPoint, toEnd end: CGPoint, withControlPoint control: CGPoint) -> CGFloat {
-    let kSubdivisions = 50
-    let step = 1.0 / CGFloat(kSubdivisions)
-    
-    var totalLength: CGFloat = 0.0
-    var prevPoint = start
-    
-    // starting from i = 1, since for i = 0 calculated point is equal to start point
-    for i in 1...kSubdivisions {
-        let t: CGFloat = CGFloat(i) * step
-        
-        let x1 = (1.0 - t) * (1.0 - t) * start.x
-        let x2 = 2.0 * (1.0 - t) * t * control.x
-        let x3 = t * t * end.x
-        let x = x1 + x2 + x3
-        
-        let y1 = (1.0 - t) * (1.0 - t) * start.y
-        let y2 = (2.0) * (1.0 - t) * t * control.y
-        let y3 = t * t * end.y
-        let y =  y1 + y2 + y3
-        
-        let diff: CGPoint = CGPoint(x: CGFloat(x) - prevPoint.x, y: y - prevPoint.y)
-        
-        totalLength += CGFloat(sqrt(diff.x * diff.x + diff.y * diff.y)) // Pythagorean
-        
-        prevPoint = CGPoint(x: x, y: y)
-    }
-    
-    return totalLength
-}
+//func bezierCurveLength(fromStart start: CGPoint, toEnd end: CGPoint, withControlPoint control: CGPoint) -> CGFloat {
+//    let kSubdivisions = 50
+//    let step = 1.0 / CGFloat(kSubdivisions)
+//    
+//    var totalLength: CGFloat = 0.0
+//    var prevPoint = start
+//    
+//    // starting from i = 1, since for i = 0 calculated point is equal to start point
+//    for i in 1...kSubdivisions {
+//        let t: CGFloat = CGFloat(i) * step
+//        
+//        let x1 = (1.0 - t) * (1.0 - t) * start.x
+//        let x2 = 2.0 * (1.0 - t) * t * control.x
+//        let x3 = t * t * end.x
+//        let x = x1 + x2 + x3
+//        
+//        let y1 = (1.0 - t) * (1.0 - t) * start.y
+//        let y2 = (2.0) * (1.0 - t) * t * control.y
+//        let y3 = t * t * end.y
+//        let y =  y1 + y2 + y3
+//        
+//        let diff: CGPoint = CGPoint(x: CGFloat(x) - prevPoint.x, y: y - prevPoint.y)
+//        
+//        totalLength += CGFloat(sqrt(diff.x * diff.x + diff.y * diff.y)) // Pythagorean
+//        
+//        prevPoint = CGPoint(x: x, y: y)
+//    }
+//    
+//    return totalLength
+//}

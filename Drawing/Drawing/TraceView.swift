@@ -7,6 +7,7 @@
 
 import UIKit
 
+//https://polyglot.jamie.ly/programming/2019/04/01/tracer-a-swift-drawing-view.html
 final class TraceView: UIView {
     private var lines: [Line] = []
     private var _expectedPaths: [Path] = []
@@ -23,7 +24,7 @@ final class TraceView: UIView {
                 let points = withAddedWayPoints(maxDistance: maxDistance, path: $0.points)
                 return Path(points: points)
             }
-            pendingPoints = _expectedPaths// Array(_expectedPaths.compactMap { $0.points }.joined())
+            pendingPoints = _expectedPaths
             drawExpectedPaths(paths: newValue)
         }
     }
@@ -43,73 +44,16 @@ final class TraceView: UIView {
     
     private func commonInit() {
         addSubview(expectedPathView)
-        expectedPaths = getShape(totalPoints: 100)
-        expectedPathView.alpha = 0.5
+        let path1 = "M133.344 165.436C152.6 143.11 181.639 110.878 248.043 153.72C299.951 187.208 399.022 187.208 428.045 187.208"
+        let path2 = "M428.045 187.208C353.254 193.069 210.934 249.937 177.717 309.443C157.623 345.438 135.989 469.031 248.043 530.469C299.951 558.929 402.092 526.003 428.045 482.747"
+        let path3 = "M294.5 385.5C294.5 386.052 294.052 386.5 293.5 386.5C292.948 386.5 292.5 386.052 292.5 385.5C292.5 384.948 292.948 384.5 293.5 384.5C294.052 384.5 294.5 384.948 294.5 385.5Z"
         
-    }
-    
-//    func getShape(totalPoints: Int) -> [Path] {
-//        var paths: [Path] = []
-//        var points: [CGPoint] = []
-//        let stroke1Path = UIBezierPath()
-//
-//
-//        let point1 = CGPoint(x: 64.071, y: 22.197)
-//        let newPointRatioX1 = (point1.x / 197) * 100
-//        let newPointRatioY1 = (point1.y / 208) * 100
-//
-//        let newPointX1 = (newPointRatioX1 * self.frame.width) / 100
-//        let newPointY1 = (newPointRatioY1 * self.frame.height) / 100
-//        let newPoint1 = CGPoint(x: newPointX1, y: newPointY1)
-//
-//        let point2 = CGPoint(x: 22.428, y: 6.714)
-//        let newPointRatioX2 = (point2.x / 197) * 100
-//        let newPointRatioY2 = (point2.y / 208) * 100
-//
-//        let newPointX2 = (newPointRatioX2 * self.frame.width) / 100
-//        let newPointY2 = (newPointRatioY2 * self.frame.height) / 100
-//        let newPoint2 = CGPoint(x: newPointX2, y: newPointY2)
-//
-//
-//        stroke1Path.move(to: newPoint1)
-//        stroke1Path.addLine(to: newPoint2)
-//
-//        for i in 0...totalPoints {
-//            let step: CGFloat = CGFloat(i) / CGFloat(totalPoints)
-//            if let point = stroke1Path.point(at: step) {
-//                points.append(point)
-//            }
-//        }
-//        paths.append(Path(points: points))
-//        return paths
-//    }
-    
-    func getShape(totalPoints: Int) -> [Path] {
-        var paths: [Path] = []
-        var points: [CGPoint] = []
-        let stroke1Path = UIBezierPath()
-        stroke1Path.move(to: (CGPoint(x: 58, y: 111.503)))
-        stroke1Path.addCurve(to: CGPoint(x: 148, y: 91.5031), controlPoint1: CGPoint(x: 69.5, y: 98.1698), controlPoint2: CGPoint(x: 103.6, y: 75.5031))
-        stroke1Path.addCurve(to: CGPoint(x: 255.5, y: 111.503), controlPoint1: CGPoint(x: 192.4, y: 107.503), controlPoint2: CGPoint(x: 238.167, y: 111.503))
-        stroke1Path.addCurve(to: CGPoint(x: 106, y: 184.503), controlPoint1: CGPoint(x: 210.833, y: 115.003), controlPoint2: CGPoint(x: 118.4, y: 134.503))
-        stroke1Path.addCurve(to: CGPoint(x: 148, y: 316.503), controlPoint1: CGPoint(x: 94.964, y: 229.003), controlPoint2: CGPoint(x: 87, y: 267.503))
-        stroke1Path.addCurve(to: CGPoint(x: 255.5, y: 288.003), controlPoint1: CGPoint(x: 196.8, y: 355.703), controlPoint2: CGPoint(x: 240, y: 313.837))
-       
-        for i in 0...totalPoints {
-            let step: CGFloat = CGFloat(i) / CGFloat(totalPoints)
-            if let point = stroke1Path.point(at: step) {
-                let newPointRatioX = (point.x / 314) * 100
-                let newPointRatioY = (point.y / 407) * 100
-                
-                let newPointX = (newPointRatioX * self.frame.width) / 100
-                let newPointY = (newPointRatioY * self.frame.height) / 100
-                let newPoint = CGPoint(x: newPointX, y: newPointY)
-                points.append(newPoint)
-            }
+        [path1, path2, path3].forEach {
+            expectedPaths.append(contentsOf: getShape(from: getPoints(path: $0), for: self, totalPoints: 100))
         }
-        paths.append(Path(points: points))
-        points = []
-        return paths
+        
+//        expectedPaths = getShape(from: getPoints(path: path3), for: self, totalPoints: 100)
+        expectedPathView.alpha = 0.5
     }
 }
 
@@ -225,14 +169,14 @@ extension TraceView {
             print("Could not retrieve context")
             return
         }
-        
+
         context.setFillColor(UIColor.white.cgColor)
         context.fill(expectedPathView.bounds)
-        
+
         paths.forEach {
             drawExpectedPath(context: context, path: $0)
         }
-        
+
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         expectedPathView.image = image
@@ -240,18 +184,18 @@ extension TraceView {
     
     private func drawExpectedPath(context: CGContext, path: Path) {
         let points = path.points
-        
+
         guard var last = points.first else {
             print("There should be at least one point")
             return
         }
-        
+
         print("Origin: \(self.frame.origin)")
         print("First: \(last)")
-                
+
         context.setLineWidth(maxDistance * 2)
         context.setLineCap(.round)
-        context.setStrokeColor(UIColor.gray.cgColor)
+        context.setStrokeColor(UIColor.red.cgColor)
         points[1..<points.count].forEach { point in
             context.move(to: last)
             context.addLine(to: point)
