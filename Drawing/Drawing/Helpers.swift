@@ -21,8 +21,6 @@ func getMidpoint(start: CGPoint, end: CGPoint) -> CGPoint {
     return CGPoint(x: x, y: y)
 }
 
-// ح
-
 func getPoints(path: String) -> [VectorBody] {
     var points: [VectorBody] = []
     var vectorBody: VectorBody = VectorBody(points: [], type: .MOVE_TO)
@@ -144,8 +142,6 @@ private func pointsPathToObject(pointsString: String, vector: VectorBody) -> [CG
                 }
             }
             
-            
-            
             if let wrappedX = x, let wrappedY = y {
                 points.append(CGPoint(x: wrappedX, y: wrappedY))
                 x = nil
@@ -196,8 +192,8 @@ func getPath(from vectors: [VectorBody], for view: UIView, totalPoints: Int) -> 
     for i in 0...totalPoints {
         let step: CGFloat = CGFloat(i) / CGFloat(totalPoints)
         if let point = stroke1Path.point(at: step) {
-            let newPointRatioX = (point.x / 526) * 100
-            let newPointRatioY = (point.y / 682) * 100
+            let newPointRatioX = (point.x / 800) * 100
+            let newPointRatioY = (point.y / 920) * 100
             
             let newPointX = (newPointRatioX * view.frame.width) / 100
             let newPointY = (newPointRatioY * view.frame.height) / 100
@@ -208,4 +204,17 @@ func getPath(from vectors: [VectorBody], for view: UIView, totalPoints: Int) -> 
     path = Path(points: points)
     points = []
     return path
+}
+
+func findAngle(point1: CGPoint, point2: CGPoint) -> CGFloat {
+    let dx = (point2.x - point1.x)
+    let dy = (point2.y - point1.y)
+    let tan = (point2.y - point1.y) / (point2.x - point1.x)
+
+    var res: CGFloat = 0
+    if (dx < 0 && dy >= 0) || (dx <  0 && dy < 0 ) {
+        res = Double.pi
+    }
+    
+    return (atan(tan) + res)
 }

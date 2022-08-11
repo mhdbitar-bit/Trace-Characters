@@ -7,26 +7,35 @@
 
 import UIKit
 
+
 //https://polyglot.jamie.ly/programming/2019/04/01/tracer-a-swift-drawing-view.html
 final class TraceView: UIView {
     private var lines: [Line] = []
     private var _expectedPaths: [Path] = []
     private var expectedPathView: UIImageView!
-    private let maxDistance: CGFloat = 20
+    private var maxDistance: CGFloat = 10
+    private var shouldStartTracing: Bool = false
     
-    private var pendingPoints = [Path]()
+    // Change it depends on character
+    var lineWidth: CGFloat = 17.5
+    
+    var lastPathIndex: Int = 0
+    var lastPointIndex: Int = 0
+    
+    var startPath: ((Bool) -> Void)?
+    
+    private var pendingPaths = [Path]()
     private var isComplete: Bool {
-        return pendingPoints.isEmpty
+        return pendingPaths.isEmpty
     }
     
     var expectedPaths: [Path] {
         get { return _expectedPaths }
         set {
             _expectedPaths = newValue.map {
-                let points = withAddedWayPoints(maxDistance: maxDistance, path: $0.points)
-                return Path(points: points)
+                return Path(points: $0.points)
             }
-            pendingPoints = _expectedPaths
+            pendingPaths = _expectedPaths
             drawExpectedPaths(paths: newValue)
         }
     }
@@ -39,22 +48,15 @@ final class TraceView: UIView {
     }
     
     override init(frame: CGRect) {
-        expectedPathView = UIImageView()
         super.init(frame: frame)
+        expectedPathView = UIImageView(frame: frame)
         commonInit()
     }
     
     private func commonInit() {
         addSubview(expectedPathView)
-        let path1 = "M133.344 165.436C152.6 143.11 181.639 110.878 248.043 153.72C299.951 187.208 399.022 187.208 428.045 187.208"
-        let path2 = "M428.045 187.208C353.254 193.069 210.934 249.937 177.717 309.443C157.623 345.438 135.989 469.031 248.043 530.469C299.951 558.929 402.092 526.003 428.045 482.747"
-        let path3 = "M294.5 385.5C294.5 386.052 294.052 386.5 293.5 386.5C292.948 386.5 292.5 386.052 292.5 385.5C292.5 384.948 292.948 384.5 293.5 384.5C294.052 384.5 294.5 384.948 294.5 385.5Z"
-
-        [path1, path2, path3].forEach {
-            expectedPaths.append(getPath(from: getPoints(path: $0), for: self, totalPoints: 100))
-        }
         
-        expectedPathView.alpha = 0.5
+        self.expectedPathView.alpha = 0.5
     }
 }
 
@@ -101,41 +103,117 @@ extension TraceView {
 
 extension TraceView {
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if touches.isEmpty {
+            return
+        }
         if let touch = touches.first {
             let end = touch.location(in: self)
-            
-            if pendingPoints.count > 0  {
-                if let path = pendingPoints.first {
-                    if path.points.count >= 2 {
-                        let firstPoint = path.points[0]
-                        let secondPoint = path.points[1]
-                        
-                        if (getDistance(start: end, end: secondPoint) < maxDistance * 2) {
-                            let line = Line(start: firstPoint, end: secondPoint, outOfBounds: false)
-                            self.lines.append(line)
-                            
-                            pendingPoints[0].points.remove(at: 0)
-                            removePath(at: 0)
+
+            if lastPathIndex < pendingPaths.count {
+                let path = pendingPaths[lastPathIndex]
+                let points = path.points
+
+                if lastPointIndex < points.count {
+                    let range = lastPointIndex + 10
+                    var index = lastPointIndex
+                    var dirty = false
+                    var minIndexToDraw = lastPointIndex
+                    while index < range && index < points.count {
+                        let firstPoint = points[index]
+                        let distance = getDistance(start: end, end: firstPoint)
+                        if distance < maxDistance {
+                            maxDistance = distance
+                            dirty = true
+                            minIndexToDraw = index
                         }
-                    } else {
-                        pendingPoints[0].points.removeAll()
-                        removePath(at: 0)
+                        index += 1
+                    }
+                    
+                    maxDistance = 10
+                    
+                    if !dirty {
+                        return
+                    }
+
+                    while lastPointIndex < minIndexToDraw && lastPointIndex < points.count-1 {
+                        let line = Line(start: points[lastPointIndex], end: points[lastPointIndex+1], outOfBounds: false)
+                        self.lines.append(line)
+                        lastPointIndex += 1
+
                     }
                 }
+            } else {
+                pendingPaths.removeAll()
             }
-            setNeedsDisplay()
+        }
+        setNeedsDisplay()
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if touches.isEmpty {
+            return
+        }
+        if let touch = touches.first {
+            let end = touch.location(in: self)
+
+            if lastPathIndex < pendingPaths.count {
+                let path = pendingPaths[lastPathIndex]
+                let points = path.points
+
+                if lastPointIndex < points.count {
+                    let range = lastPointIndex + 10
+                    var index = lastPointIndex
+                    var dirty = false
+                    var minIndexToDraw = lastPointIndex
+                    while index < range && index < points.count {
+                        let firstPoint = points[index]
+                        let distance = getDistance(start: end, end: firstPoint)
+                        if distance < maxDistance {
+                            maxDistance = distance
+                            dirty = true
+                            minIndexToDraw = index
+                        }
+                        index += 1
+                    }
+                    
+                    maxDistance = 10
+                    
+                    if !dirty {
+                        return
+                    }
+
+                    while lastPointIndex < minIndexToDraw && lastPointIndex < points.count-1 {
+                        let line = Line(start: points[lastPointIndex], end: points[lastPointIndex+1], outOfBounds: false)
+                        self.lines.append(line)
+                        lastPointIndex += 1
+
+                    }
+                }
+            } else {
+                pendingPaths.removeAll()
+            }
+        }
+        setNeedsDisplay()
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if lastPathIndex < pendingPaths.count {
+            if lastPointIndex >= pendingPaths[lastPathIndex].points.count - 1 {
+                lastPointIndex = 0
+                lastPathIndex += 1
+            }
         }
     }
     
     private func removePath(at index: Int) {
-        if pendingPoints[index].points.count == 0 {
-            pendingPoints.remove(at: index)
+        if pendingPaths[index].points.count == 0 {
+            pendingPaths.remove(at: index)
         }
     }
-        
+    
     private func isPointWithinBounds(_ point: CGPoint) -> Bool {
-        return pendingPoints.contains { path in
+        return pendingPaths.contains { path in
             return path.points.contains { expectedPoint in
                 return getDistance(start: point, end: expectedPoint) < maxDistance
             }
@@ -153,10 +231,6 @@ extension TraceView {
             return
         }
         
-        // Background color
-//        context.setFillColor(UIColor.white.cgColor)
-//        context.fill(bounds)
-        
         lines.forEach {
             drawLine(context: context, line: $0, overrideColor: overrideColor)
         }
@@ -170,14 +244,11 @@ extension TraceView {
             print("Could not retrieve context")
             return
         }
-
-        context.setFillColor(UIColor.white.cgColor)
-        context.fill(expectedPathView.bounds)
-
+        
         paths.forEach {
             drawExpectedPath(context: context, path: $0)
         }
-
+        
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         expectedPathView.image = image
@@ -185,38 +256,37 @@ extension TraceView {
     
     private func drawExpectedPath(context: CGContext, path: Path) {
         let points = path.points
-
+        
         guard var last = points.first else {
             print("There should be at least one point")
             return
         }
-
-        print("Origin: \(self.frame.origin)")
-        print("First: \(last)")
-
-        context.setLineWidth(maxDistance * 2)
+        
+        context.setLineWidth(lineWidth)
         context.setLineCap(.round)
-        context.setStrokeColor(UIColor.red.cgColor)
+        context.setStrokeColor(UIColor.systemPink.cgColor)
         points[1..<points.count].forEach { point in
             context.move(to: last)
             context.addLine(to: point)
             context.strokePath()
             last = point
         }
-
+        
     }
     
     private func drawLine(context: CGContext, line: Line, overrideColor: CGColor?) {
-        var color = UIColor.black.cgColor
+        var color = UIColor(named: "lineColor")!.cgColor
         if line.outOfBounds {
             color = UIColor.red.cgColor
         } else if let overrideColor = overrideColor {
             color = overrideColor
         }
         
-        context.setLineWidth(self.maxDistance * 2)
+        context.setLineWidth(lineWidth)
         context.setLineCap(.round)
         context.setStrokeColor(color)
+        
+        context.fillPath(using: .winding)
         
         context.move(to: line.start)
         context.addLine(to: line.end)
