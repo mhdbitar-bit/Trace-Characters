@@ -19,7 +19,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3gB-Pq-32H">
                                 <rect key="frame" x="0.0" y="210" width="414" height="476"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ceentest" translatesAutoresizingMaskIntoConstraints="NO" id="W10-zA-pAx">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kaa" translatesAutoresizingMaskIntoConstraints="NO" id="W10-zA-pAx">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="476"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </imageView>
@@ -133,7 +133,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ceentest" width="800" height="920"/>
+        <image name="kaa" width="800" height="920"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

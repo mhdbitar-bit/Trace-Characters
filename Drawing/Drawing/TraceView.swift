@@ -13,7 +13,7 @@ final class TraceView: UIView {
     private var lines: [Line] = []
     private var _expectedPaths: [Path] = []
     private var expectedPathView: UIImageView!
-    private var maxDistance: CGFloat = 10
+    private var maxDistance: CGFloat = 20
     private var shouldStartTracing: Bool = false
     
     // Change it depends on character
@@ -23,6 +23,11 @@ final class TraceView: UIView {
     var lastPointIndex: Int = 0
     
     var startPath: ((Bool) -> Void)?
+    var isStartingNewPath: Bool = false {
+        didSet {
+            startPath?(isStartingNewPath)
+        }
+    }
     
     private var pendingPaths = [Path]()
     private var isComplete: Bool {
@@ -115,7 +120,7 @@ extension TraceView {
                 let points = path.points
 
                 if lastPointIndex < points.count {
-                    let range = lastPointIndex + 10
+                    let range = lastPointIndex + 20
                     var index = lastPointIndex
                     var dirty = false
                     var minIndexToDraw = lastPointIndex
@@ -130,10 +135,14 @@ extension TraceView {
                         index += 1
                     }
                     
-                    maxDistance = 10
+                    maxDistance = 20
                     
                     if !dirty {
                         return
+                    }
+                    
+                    if lastPointIndex == 0 {
+                        isStartingNewPath = false
                     }
 
                     while lastPointIndex < minIndexToDraw && lastPointIndex < points.count-1 {
@@ -162,7 +171,7 @@ extension TraceView {
                 let points = path.points
 
                 if lastPointIndex < points.count {
-                    let range = lastPointIndex + 10
+                    let range = lastPointIndex + 20
                     var index = lastPointIndex
                     var dirty = false
                     var minIndexToDraw = lastPointIndex
@@ -177,7 +186,7 @@ extension TraceView {
                         index += 1
                     }
                     
-                    maxDistance = 10
+                    maxDistance = 20
                     
                     if !dirty {
                         return
@@ -202,6 +211,14 @@ extension TraceView {
             if lastPointIndex >= pendingPaths[lastPathIndex].points.count - 1 {
                 lastPointIndex = 0
                 lastPathIndex += 1
+                
+                if lastPathIndex == pendingPaths.count {
+                    isStartingNewPath = false
+                    pendingPaths.removeAll()
+                    setNeedsDisplay()
+                } else {
+                    isStartingNewPath = true
+                }
             }
         }
     }
