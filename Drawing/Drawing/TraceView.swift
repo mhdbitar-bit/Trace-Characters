@@ -281,7 +281,7 @@ extension TraceView {
         
         context.setLineWidth(lineWidth)
         context.setLineCap(.round)
-        context.setStrokeColor(UIColor.systemPink.cgColor)
+        context.setStrokeColor(UIColor.clear.cgColor)
         points[1..<points.count].forEach { point in
             context.move(to: last)
             context.addLine(to: point)
