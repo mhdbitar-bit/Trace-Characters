@@ -14,6 +14,7 @@ final class LettersViewController: UIViewController {
     let imageView: UIImageView = {
         let arrowImage = UIImage(named: "arrow")
         let imageView = UIImageView(image: arrowImage)
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
@@ -90,7 +91,12 @@ final class LettersViewController: UIViewController {
         traceView.autoPlayShape()
     }
     
+    @IBAction func hideBtnTapped(_ sender: UIButton) {
+    
+    }
+    
     @IBAction func resetBtnTapped(_ sender: UIButton) {
-//        imageView.isHidden = false
+        imageView.isHidden = false
+        traceView.reset()
     }
 }

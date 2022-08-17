@@ -45,6 +45,8 @@ final class TraceView: UIView {
         }
     }
     
+    private var fillColor: UIColor = .clear
+    
     required init?(coder: NSCoder) {
         expectedPathView = UIImageView(coder: coder)
         
@@ -156,6 +158,8 @@ extension TraceView {
                 pendingPaths.removeAll()
             }
         }
+        
+        fillColor = UIColor(named: "lineColor") ?? .black
         setNeedsDisplay()
     }
     
@@ -242,7 +246,7 @@ extension TraceView {
 
 extension TraceView {
     override func draw(_ rect: CGRect) {
-        let overrideColor = isComplete ? UIColor.green.cgColor : nil
+        let overrideColor = isComplete ? UIColor.green : nil
         guard let context = UIGraphicsGetCurrentContext() else {
             print("ERROR: no context available")
             return
@@ -288,17 +292,16 @@ extension TraceView {
         }
     }
     
-    private func drawLine(context: CGContext, line: Line, overrideColor: CGColor?) {
-        var color = UIColor(named: "lineColor")!.cgColor
+    private func drawLine(context: CGContext, line: Line, overrideColor: UIColor?) {
         if line.outOfBounds {
-            color = UIColor.red.cgColor
+            fillColor = UIColor.red
         } else if let overrideColor = overrideColor {
-            color = overrideColor
+            fillColor = overrideColor
         }
         
         context.setLineWidth(lineWidth)
         context.setLineCap(.round)
-        context.setStrokeColor(color)
+        context.setStrokeColor(fillColor.cgColor)
         
         context.fillPath(using: .winding)
         
@@ -308,10 +311,11 @@ extension TraceView {
     }
 }
 
-// MARK: - AutoPLay
+// MARK: - AutoPlay
 extension TraceView {
     func autoPlayShape() {
         guard !pendingPaths.isEmpty else { return }
+        fillColor = UIColor(named: "lineColor") ?? .black
         let paths = pendingPaths.reversed()
         drawPath(paths: paths.compactMap { $0 }, index: paths.count-1)
     }
@@ -338,5 +342,14 @@ extension TraceView {
         } else {
             completion?()
         }
+    }
+}
+
+// MARK: - Reset
+extension TraceView {
+    func reset() {
+        fillColor = .clear
+        lines = []
+        setNeedsDisplay()
     }
 }

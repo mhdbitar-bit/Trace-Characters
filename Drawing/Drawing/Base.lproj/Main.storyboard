@@ -45,7 +45,7 @@
                                 <rect key="frame" x="40" y="792" width="334" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Phs-OI-4ux">
-                                        <rect key="frame" x="0.0" y="0.0" width="162" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="104.5" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="M32-l9-CKu"/>
                                         </constraints>
@@ -56,11 +56,19 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RA5-N1-JAR">
-                                        <rect key="frame" x="172" y="0.0" width="162" height="50"/>
+                                        <rect key="frame" x="114.5" y="0.0" width="105" height="50"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Hide"/>
+                                        <connections>
+                                            <action selector="hideBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FuW-1g-3uQ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dHc-pC-qhS">
+                                        <rect key="frame" x="229.5" y="0.0" width="104.5" height="50"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Reset"/>
                                         <connections>
-                                            <action selector="resetBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Bo-r2-uji"/>
+                                            <action selector="resetBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wRq-aL-K0S"/>
                                         </connections>
                                     </button>
                                 </subviews>
