@@ -252,13 +252,12 @@ extension TraceView {
             drawLine(context: context, line: $0, overrideColor: overrideColor)
         }
         
-        UIGraphicsEndImageContext()
+//        UIGraphicsEndImageContext()
     }
     
     private func drawExpectedPaths(paths: [Path]) {
-        UIGraphicsBeginImageContext(expectedPathView.bounds.size)
+//        UIGraphicsBeginImageContext(expectedPathView.bounds.size)
         guard let context = UIGraphicsGetCurrentContext() else {
-            print("Could not retrieve context")
             return
         }
         
@@ -266,16 +265,15 @@ extension TraceView {
             drawExpectedPath(context: context, path: $0)
         }
         
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        expectedPathView.image = image
+//        let image = UIGraphicsGetImageFromCurrentImageContext()
+//        UIGraphicsEndImageContext()
+//        expectedPathView.image = image
     }
     
     private func drawExpectedPath(context: CGContext, path: Path) {
         let points = path.points
         
         guard var last = points.first else {
-            print("There should be at least one point")
             return
         }
         
@@ -288,7 +286,6 @@ extension TraceView {
             context.strokePath()
             last = point
         }
-        
     }
     
     private func drawLine(context: CGContext, line: Line, overrideColor: CGColor?) {
@@ -308,5 +305,38 @@ extension TraceView {
         context.move(to: line.start)
         context.addLine(to: line.end)
         context.strokePath()
+    }
+}
+
+// MARK: - AutoPLay
+extension TraceView {
+    func autoPlayShape() {
+        guard !pendingPaths.isEmpty else { return }
+        let paths = pendingPaths.reversed()
+        drawPath(paths: paths.compactMap { $0 }, index: paths.count-1)
+    }
+    
+    func drawPath(paths: [Path], index: Int) {
+        if index < 0 {
+            return
+        }
+        animate(points: paths[index].points, index: 0) { [weak self] in
+            self?.drawPath(paths: paths, index: index-1)
+        }
+    }
+    
+    func animate(points: [CGPoint], index: Int, completion: (() -> Void)?) {
+        var i = index
+        i = min(index + 1, points.count - 1)
+        lines.append(Line(start: points[i], end: points[i-1], outOfBounds: false))
+        setNeedsDisplay()
+        
+        if i < points.count-1 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
+                self.animate(points: points, index: i, completion: completion)
+            }
+        } else {
+            completion?()
+        }
     }
 }

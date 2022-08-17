@@ -20,6 +20,7 @@ final class LettersViewController: UIViewController {
     var workingPathIndex: Int = 0
     var paths: [Path] = []
     var letter: Letter!
+    var points: [CGPoint] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +30,7 @@ final class LettersViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-    
+        
         updateUI(letter: letter)
     }
     
@@ -53,9 +54,9 @@ final class LettersViewController: UIViewController {
     }
     
     private func updateUI(letter: Letter) {
-    
+        
         traceView.addSubview(imageView)
-    
+        
         placeholderImage.image = UIImage(named: letter.image)
         letter.paths.enumerated().forEach { (index, currentPath) in
             let path = getPath(from: getPoints(path: currentPath), for: traceView, totalPoints: 100)
@@ -63,6 +64,7 @@ final class LettersViewController: UIViewController {
                 addArrowImage(point1: path.points[0], point2: path.points[1])
             }
             paths.append(path)
+            
             self.traceView.expectedPaths.append(path)
         }
         
@@ -78,8 +80,17 @@ final class LettersViewController: UIViewController {
                     }
                 }
             }
-
+            
             self.imageView.isHidden = !isHidden
         }
+    }
+    
+    @IBAction func autoplayBtnTapped(_ sender: UIButton) {
+        imageView.isHidden = true
+        traceView.autoPlayShape()
+    }
+    
+    @IBAction func resetBtnTapped(_ sender: UIButton) {
+//        imageView.isHidden = false
     }
 }

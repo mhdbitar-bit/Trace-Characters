@@ -12,9 +12,6 @@
 		5D0A7F242892590D00B9054F /* TraceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0A7F232892590D00B9054F /* TraceView.swift */; };
 		5D0A7F2628926B2400B9054F /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0A7F2528926B2400B9054F /* Helpers.swift */; };
 		5D0A7F28289274D300B9054F /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0A7F27289274D300B9054F /* Path.swift */; };
-		5DB8452028A50E7700401AE6 /* ManView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DB8451F28A50E7700401AE6 /* ManView.xib */; };
-		5DB8452228A50ECA00401AE6 /* ManView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB8452128A50ECA00401AE6 /* ManView.swift */; };
-		5DB8452428A5105000401AE6 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB8452328A5105000401AE6 /* CustomViewController.swift */; };
 		5DB8452728A65BB200401AE6 /* CharactersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB8452628A65BB200401AE6 /* CharactersViewModel.swift */; };
 		5DB8452928A65CF200401AE6 /* LettersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB8452828A65CF200401AE6 /* LettersTableViewController.swift */; };
 		5DB8452C28A6990C00401AE6 /* LetterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB8452A28A6990C00401AE6 /* LetterTableViewCell.swift */; };
@@ -34,9 +31,6 @@
 		5D0A7F232892590D00B9054F /* TraceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraceView.swift; sourceTree = "<group>"; };
 		5D0A7F2528926B2400B9054F /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		5D0A7F27289274D300B9054F /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
-		5DB8451F28A50E7700401AE6 /* ManView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ManView.xib; sourceTree = "<group>"; };
-		5DB8452128A50ECA00401AE6 /* ManView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManView.swift; sourceTree = "<group>"; };
-		5DB8452328A5105000401AE6 /* CustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 		5DB8452628A65BB200401AE6 /* CharactersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersViewModel.swift; sourceTree = "<group>"; };
 		5DB8452828A65CF200401AE6 /* LettersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LettersTableViewController.swift; sourceTree = "<group>"; };
 		5DB8452A28A6990C00401AE6 /* LetterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterTableViewCell.swift; sourceTree = "<group>"; };
@@ -78,8 +72,6 @@
 		5DB8451E28A50E6A00401AE6 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				5DB8451F28A50E7700401AE6 /* ManView.xib */,
-				5DB8452128A50ECA00401AE6 /* ManView.swift */,
 				5DB8452A28A6990C00401AE6 /* LetterTableViewCell.swift */,
 				5DB8452B28A6990C00401AE6 /* LetterTableViewCell.xib */,
 			);
@@ -92,6 +84,15 @@
 				5DB8452628A65BB200401AE6 /* CharactersViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5DDF53E928ACE1A3004A1A7A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				5DF8EA11288E73D1002D7095 /* AppDelegate.swift */,
+				5DF8EA13288E73D1002D7095 /* SceneDelegate.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		5DF8EA05288E73D1002D7095 = {
@@ -117,8 +118,7 @@
 			children = (
 				5DB8452528A65BA600401AE6 /* ViewModel */,
 				5DB8451E28A50E6A00401AE6 /* UI */,
-				5DF8EA11288E73D1002D7095 /* AppDelegate.swift */,
-				5DF8EA13288E73D1002D7095 /* SceneDelegate.swift */,
+				5DDF53E928ACE1A3004A1A7A /* Main */,
 				5DF8EA15288E73D1002D7095 /* LettersViewController.swift */,
 				5DB9A33228912B8400498680 /* UIBezierPathLength.swift */,
 				5DF8EA17288E73D1002D7095 /* Main.storyboard */,
@@ -129,7 +129,6 @@
 				5D0A7F27289274D300B9054F /* Path.swift */,
 				5D0A7F232892590D00B9054F /* TraceView.swift */,
 				5D0A7F2528926B2400B9054F /* Helpers.swift */,
-				5DB8452328A5105000401AE6 /* CustomViewController.swift */,
 				5DB8452828A65CF200401AE6 /* LettersTableViewController.swift */,
 			);
 			path = Drawing;
@@ -207,7 +206,6 @@
 				5DF8EA1B288E73DB002D7095 /* Assets.xcassets in Resources */,
 				5DB8452D28A6990C00401AE6 /* LetterTableViewCell.xib in Resources */,
 				5DF8EA19288E73D1002D7095 /* Main.storyboard in Resources */,
-				5DB8452028A50E7700401AE6 /* ManView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,11 +263,9 @@
 				5DF8EA12288E73D1002D7095 /* AppDelegate.swift in Sources */,
 				5DB9A33328912B8400498680 /* UIBezierPathLength.swift in Sources */,
 				5D0A7F2628926B2400B9054F /* Helpers.swift in Sources */,
-				5DB8452228A50ECA00401AE6 /* ManView.swift in Sources */,
 				5DB8452928A65CF200401AE6 /* LettersTableViewController.swift in Sources */,
 				5D0A7F242892590D00B9054F /* TraceView.swift in Sources */,
 				5DF8EA14288E73D1002D7095 /* SceneDelegate.swift in Sources */,
-				5DB8452428A5105000401AE6 /* CustomViewController.swift in Sources */,
 				5D0A7F22289258D600B9054F /* Line.swift in Sources */,
 				5DB8452C28A6990C00401AE6 /* LetterTableViewCell.swift in Sources */,
 				5D0A7F28289274D300B9054F /* Path.swift in Sources */,

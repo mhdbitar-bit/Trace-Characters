@@ -41,18 +41,43 @@
                                     <constraint firstItem="ziM-B0-3xL" firstAttribute="top" secondItem="3gB-Pq-32H" secondAttribute="top" id="o7w-A2-9qB"/>
                                 </constraints>
                             </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="GSy-OV-fU3">
+                                <rect key="frame" x="40" y="792" width="334" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Phs-OI-4ux">
+                                        <rect key="frame" x="0.0" y="0.0" width="162" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="M32-l9-CKu"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Autoplay"/>
+                                        <connections>
+                                            <action selector="autoplayBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8ff-AL-fIP"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RA5-N1-JAR">
+                                        <rect key="frame" x="172" y="0.0" width="162" height="50"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Reset"/>
+                                        <connections>
+                                            <action selector="resetBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Bo-r2-uji"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="3gB-Pq-32H" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="0O3-VI-t1t"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="GSy-OV-fU3" secondAttribute="bottom" constant="20" id="NfS-7B-3tC"/>
                             <constraint firstItem="3gB-Pq-32H" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Nth-o2-4cf"/>
+                            <constraint firstItem="GSy-OV-fU3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="Svm-nB-cab"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="GSy-OV-fU3" secondAttribute="trailing" constant="20" id="YMI-HG-bgr"/>
                             <constraint firstItem="3gB-Pq-32H" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="aw0-Yr-5tv"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="7d6-TW-QfD">
-                        <barButtonItem key="rightBarButtonItem" title="Man" id="Wbp-z6-aFu"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="7d6-TW-QfD"/>
                     <connections>
                         <outlet property="placeholderImage" destination="W10-zA-pAx" id="ehj-fS-rVV"/>
                         <outlet property="traceView" destination="ziM-B0-3xL" id="Y0m-fY-EFf"/>

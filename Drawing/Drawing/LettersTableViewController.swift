@@ -116,8 +116,6 @@ final class LettersTableViewController: UITableViewController {
             "M461 275.5C461 275.776 460.776 276 460.5 276C460.224 276 460 275.776 460 275.5C460 275.224 460.224 275 460.5 275C460.776 275 461 275.224 461 275.5Z"
         ])
         
-        
-        
     ]
     
     override func viewDidLoad() {
